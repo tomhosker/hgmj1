@@ -1,4 +1,4 @@
-# HarvestHub
+# HGMJ
 
 The code is this repository describes a server for a website, the purpose of which is to manage my mood journal.
 
