@@ -1,0 +1,6 @@
+#!/bin/bash
+
+# This is a quick script to pull up the Heroku Postgres interface for this
+# application.
+
+gnome-terminal -- heroku pg:psql --app hgmj < create_drop.sql

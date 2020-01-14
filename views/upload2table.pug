@@ -1,0 +1,32 @@
+extends layout
+
+block content
+  div.helpbox
+    h2 Tips
+    p To #[b create] a #[b new] record:
+    ol
+      li Select a suitable #[i #[a(href="https://www.tutorialspoint.com/sql/sql-primary-key") key]]. (The key in this context is the first entry in the form opposite.)
+      li Fill in any mandatory entries. (These vary from table to table.)
+      li Fill in or leave blank, as you prefer, the other entries.
+      li Leave the "Update existing record" box unchecked.
+      li Press the "Submit" button.
+    p To #[b update] an #[b existing] record:
+    ol
+      li Find the key for the record you wish to update. (Look in the table which contains that record; the key is the value in the left-most column.)
+      li Fill in all the entries you wish to be updated. (Leaving an entry blank will mean it will stay the same.)
+      li Check the "Update existing record" box.
+      li Press the "Submit" button.
+
+  h1 #{title}
+
+  p Add a new record?
+  form(action=formAction, method="post")
+    for column in columns
+      p
+        | #{column.name}: 
+        input(type=column.type, name=column.name)
+
+    p
+      input(type="checkbox", name="update")
+      | Update existing record
+    input(type="submit", value="Submit")
