@@ -46,6 +46,7 @@ const dotenv = require("dotenv").config();
 const indexRouter = require("./routes/index");
 const profileRouter = require("./routes/profile");
 const asIsRouter = require("./routes/asis");
+const uploadsRouter = require("./routes/uploads");
 
 // Error codes.
 const notFound = 404;
@@ -89,6 +90,9 @@ app.use("/profile",
 app.use("/asis",
         require("connect-ensure-login").ensureLoggedIn(),
         asIsRouter);
+app.use("/uploads",
+        require("connect-ensure-login").ensureLoggedIn(),
+        uploadsRouter);
 app.get("/login", function(req, res){ res.redirect("/"); });
 app.post("/login",
          passport.authenticate("local", { failureRedirect: "/login" }),
