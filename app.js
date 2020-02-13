@@ -90,7 +90,7 @@ app.use("/profile",
 app.use("/asis",
         require("connect-ensure-login").ensureLoggedIn(),
         asIsRouter);
-app.use("/uploads",
+app.use("/upload2",
         require("connect-ensure-login").ensureLoggedIn(),
         uploadsRouter);
 app.get("/login", function(req, res){ res.redirect("/"); });

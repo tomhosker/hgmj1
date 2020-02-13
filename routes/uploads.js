@@ -15,12 +15,12 @@ const scraper = new Scraper();
 const finaliser = new Finaliser();
 
 // Return the page for uploading to the JournalEntry table.
-router.get("/upload2/JournalEntry", function(req, res, next){
+router.get("/JournalEntry", function(req, res, next){
   var theColumns = [{ name: "painScore", type: "number" },
                     { name: "remarks", type: "text" }];
-  var action = "/boxeyecomponents/insert2/boxeyerig";
+  var action = "/insert2/boxeyerig";
 
-  properties = { title: "Upload to BoxEyeRig", columns: theColumns,
+  properties = { title: "Add a New Journal Entry", columns: theColumns,
                  formAction: action };
   finaliser.protoRender(req, res, "upload2table", properties);
 });
