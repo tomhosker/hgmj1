@@ -20,7 +20,7 @@ const finaliser = new Finaliser();
 router.get("/upload2/JournalEntry", function(req, res, next){
   var theColumns = [{ name: "painScore", type: "number" },
                     { name: "remarks", type: "text" }];
-  var action = "/uploads/insert2/boxeyerig";
+  var action = "/uploads/insert2/JournalEntry";
 
   properties = { title: "Add a New Journal Entry", columns: theColumns,
                  formAction: action };
