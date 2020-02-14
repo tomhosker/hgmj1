@@ -9,6 +9,6 @@ CREATE TABLE JournalEntry
 (
   id SERIAL PRIMARY KEY,
   painScore INT NOT NULL,
-  theTimeStamp INT NOT NULL,
+  theTimeStamp BIGINT NOT NULL,
   remarks VARCHAR(999)
 );
