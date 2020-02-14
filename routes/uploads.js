@@ -29,7 +29,7 @@ router.get("/upload2/JournalEntry", function(req, res, next){
 
 // Execute an upload to the JournalEntry table.
 router.post("/insert2/JournalEntry", function(req, res, next){
-  uploader.insert(req, res, "JournalEntry");
+  uploader.insertNewJournalEntry(req, res, "JournalEntry");
 });
 
 module.exports = router;
