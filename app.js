@@ -46,6 +46,7 @@ const dotenv = require("dotenv").config();
 const indexRouter = require("./routes/index");
 const profileRouter = require("./routes/profile");
 const asIsRouter = require("./routes/asis");
+const journalRouter = require("./routes/journal");
 const uploadsRouter = require("./routes/uploads");
 
 // Error codes.
@@ -90,6 +91,9 @@ app.use("/profile",
 app.use("/asis",
         require("connect-ensure-login").ensureLoggedIn(),
         asIsRouter);
+app.use("/journal",
+        require("connect-ensure-login").ensureLoggedIn(),
+        journalRouter);
 app.use("/uploads",
         require("connect-ensure-login").ensureLoggedIn(),
         uploadsRouter);

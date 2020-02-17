@@ -2,12 +2,12 @@ extends layout
 
 block content
   h1 #{title}
-  p Welcome to #[strong HGMJ], His Grace's Mood Journal.
+  p Welcome to #[strong HGMJ], a mood journal.
 
   if loggedIn
     h2 Browse Data
     ul
-      li #[a(href="/asis/JournalEntry") Journal entries].
+      li #[a(href="/journal") Journal entries].
 
     h2 Upload Data
     ul
