@@ -17,8 +17,10 @@ router.get("/", function(req, res, next){
   var isLoggedIn = true;
   var isAdmin = false;
 
+console.log(req.user);
+
   if(req.user === undefined) isLoggedIn = false;
-  else if(req.user === "admin") isAdmin = true;
+  else if(req.user.username === "admin") isAdmin = true;
 
   finaliser.protoRender(req, res, "index",
                         { title: "Welcome",
