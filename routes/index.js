@@ -20,7 +20,7 @@ router.get("/", function(req, res, next){
 
   finaliser.protoRender(req, res, "index",
                         { title: "Welcome",
-                          loggedIn: isLoggedIn });
+                          loggedIn: isLoggedIn, userName: req.user });
 });
 
 module.exports = router;
