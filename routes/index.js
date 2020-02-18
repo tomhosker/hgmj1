@@ -15,12 +15,14 @@ const finaliser = new Finaliser();
 // GET home page.
 router.get("/", function(req, res, next){
   var isLoggedIn = true;
+  var isAdmin = false;
 
   if(req.user === undefined) isLoggedIn = false;
+  else if(req.user === "admin") isAdmin = true;
 
   finaliser.protoRender(req, res, "index",
                         { title: "Welcome",
-                          loggedIn: isLoggedIn, userName: req.user });
+                          loggedIn: isLoggedIn, isAdmin: isAdmin });
 });
 
 module.exports = router;
