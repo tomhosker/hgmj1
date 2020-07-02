@@ -7,7 +7,8 @@ block content
   if loggedIn
     h2 Browse Data
     ul
-      li #[a(href="/journal") Journal entries].
+      li #[a(href="/journal") #[i The Journal]], i.e. all entries.
+      li #[a(href="/journal/recent") Recent entries].
 
     if isAdmin
       h2 Upload Data
