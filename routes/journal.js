@@ -14,9 +14,14 @@ const router = express.Router();
 const scraper = new Scraper();
 const finaliser = new Finaliser();
 
-// Return the page for a given table.
+// Return the page for the whole journal.
 router.get("/", function(req, res, next){
   scraper.fetchJournal(req, res);
+});
+
+// Return the page for the most recent journal entries.
+router.get("/", function(req, res, next){
+  scraper.fetchRecent(req, res);
 });
 
 module.exports = router;
