@@ -20,7 +20,7 @@ router.get("/", function(req, res, next){
 });
 
 // Return the page for the most recent journal entries.
-router.get("/", function(req, res, next){
+router.get("/recent", function(req, res, next){
   scraper.fetchRecent(req, res);
 });
 
