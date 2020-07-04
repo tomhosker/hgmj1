@@ -1,5 +1,10 @@
 extends layout
 
+<head>
+<!-- Load plotly.js into the DOM -->
+<script src='https://cdn.plot.ly/plotly-latest.min.js'></script>
+</head>
+
 block content
   h1=title
 
@@ -14,3 +19,5 @@ block content
         tr
           for item in row
             td=item
+
+  <div id='myDiv'><!-- Plotly chart will be drawn inside this DIV --></div>
