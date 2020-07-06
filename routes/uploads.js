@@ -19,7 +19,7 @@ const finaliser = new Finaliser();
 // Return the page for uploading to the JournalEntry table.
 router.get("/upload2/JournalEntry", function(req, res, next){
   var theColumns = [{ name: "painScore", type: "number" },
-                    { name: "remarks", type: "text" }];
+                    { name: "remarks", type: "textarea" }];
   var action = "/uploads/insert2/JournalEntry";
 
   properties = { title: "Add a New Journal Entry", columns: theColumns,
@@ -31,7 +31,7 @@ router.get("/upload2/JournalEntry", function(req, res, next){
 router.get("/upload2/JournalEntry/special", function(req, res, next){
   var theColumns = [{ name: "timeStamp", type: "datetime-local" },
                     { name: "painScore", type: "number" },
-                    { name: "remarks", type: "text" }];
+                    { name: "remarks", type: "textarea" }];
   var action = "/uploads/insert2/JournalEntry/special";
 
   properties = { title: "Add a New Journal Entry Retroactively",
