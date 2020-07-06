@@ -34,8 +34,8 @@ router.get("/upload2/JournalEntry/special", function(req, res, next){
                     { name: "remarks", type: "text" }];
   var action = "/uploads/insert2/JournalEntry/special";
 
-  properties = { title: "Add a New Journal Entry", columns: theColumns,
-                 formAction: action, isSpecial: true };
+  properties = { title: "Add a New Journal Entry Retroactively",
+                 columns: theColumns, formAction: action, isSpecial: true };
   finaliser.protoRender(req, res, "upload2table", properties);
 });
 
