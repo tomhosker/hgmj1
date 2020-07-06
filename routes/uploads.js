@@ -29,7 +29,7 @@ router.get("/upload2/JournalEntry", function(req, res, next){
 
 // Return the page for a SPECIAL upload to the JournalEntry table.
 router.get("/upload2/JournalEntry/special", function(req, res, next){
-  var theColumns = [{ name: "when", type: "datetime-local" },
+  var theColumns = [{ name: "timeStamp", type: "datetime-local" },
                     { name: "painScore", type: "number" },
                     { name: "remarks", type: "text" }];
   var action = "/uploads/insert2/JournalEntry/special";
