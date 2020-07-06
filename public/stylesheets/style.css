@@ -1,4 +1,30 @@
+@font-face {
+  font-family: computerModern;
+  src: url("fonts/cmunrm.ttf");
+}
+@font-face {
+  font-family: computerModern;
+  src: url("fonts/cmunti.ttf");
+  font-style: italic;
+}
+@font-face {
+  font-family: computerModern;
+  src: url("fonts/cmunbx.ttf");
+  font-weight: bold;
+}
+@font-face {
+  font-family: computerModern;
+  src: url("fonts/cmunbi.ttf");
+  font-weight: bold;
+  font-style: italic;
+}
+@font-face {
+  font-family: fraktur;
+  src: url("fonts/fraktur.ttf");
+}
+
 body {
+  font-family: computerModern, serif;
   padding-left: 20px;
   padding-right: 20px;
 }
