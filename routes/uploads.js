@@ -27,9 +27,26 @@ router.get("/upload2/JournalEntry", function(req, res, next){
   finaliser.protoRender(req, res, "upload2table", properties);
 });
 
+// Return the page for a SPECIAL upload to the JournalEntry table.
+router.get("/upload2/JournalEntry/special", function(req, res, next){
+  var theColumns = [{ name: "when", type: "datetime" },
+                    { name: "painScore", type: "number" },
+                    { name: "remarks", type: "text" }];
+  var action = "/uploads/insert2/JournalEntry/special";
+
+  properties = { title: "Add a New Journal Entry", columns: theColumns,
+                 formAction: action, isSpecial: true };
+  finaliser.protoRender(req, res, "upload2table", properties);
+});
+
 // Execute an upload to the JournalEntry table.
 router.post("/insert2/JournalEntry", function(req, res, next){
   uploader.insertNewJournalEntry(req, res, "JournalEntry");
+});
+
+// Execute a SPECIAL upload to the JournalEntry table.
+router.post("/insert2/JournalEntry/special", function(req, res, next){
+  uploader.insertNewJournalEntrySpecial(req, res, "JournalEntry");
 });
 
 module.exports = router;
