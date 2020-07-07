@@ -3,6 +3,8 @@
 # This is a quick script to pull up the Heroku Postgres interface for this
 # application.
 
-# gnome-terminal -- heroku pg:psql --app hgmj < create_drop.sql
-
+heroku login
 gnome-terminal -- heroku pg:psql --app hgmj
+
+# Run the below in order to run an SQL script.
+#     gnome-terminal -- heroku pg:psql --app hgmj < create_drop.sql

@@ -11,10 +11,11 @@ block content
       li #[a(href="/journal/recent") Recent entries].
 
     if isAdmin
-      h2 Upload Data
+      h2 Add/Remove Data
       ul
         li #[a(href="uploads/upload2/JournalEntry") Add a new journal entry].
         li #[a(href="uploads/upload2/JournalEntry/special") Add a new journal entry #[i retroactively]].
+        li #[a(href="stills/delete") Delete a journal entry].
 
   else
     h2 Log In
