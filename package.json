@@ -1,14 +1,13 @@
 {
-  "name": "harvesthub",
-  "version": "0.1.0",
-  "private": true,
+  "name": "hgmj",
+  "version": "1.0.0",
+  "private": false,
   "scripts": {
     "start": "node ./bin/www",
     "devstart": "nodemon ./bin/www"
   },
   "dependencies": {
     "body-parser": "^1.19.0",
-    "clean-css": "^4.2.3",
     "connect-ensure-login": "^0.1.1",
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
@@ -21,7 +20,7 @@
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
     "pg": "^7.18.2",
-    "pug": "2.0.0-beta11"
+    "pug": "^2.0.4",
   },
   "devDependencies": {
     "nodemon": "^1.19.1"
