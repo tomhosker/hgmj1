@@ -53,6 +53,46 @@ a:visited {
   color: blue;
 }
 
+span.zero-colour {
+  color: rgb(0, 255, 0);
+}
+
+.one-colour {
+  color: rgb(25, 230, 0);
+}
+
+.two-colour {
+  color: rgb(50, 205, 0);
+}
+
+.three-colour {
+  color: rgb(75, 180, 0);
+}
+
+.four-colour {
+  color: rgb(100, 155, 0);
+}
+
+.five-colour {
+  color: rgb(125, 130, 0);
+}
+
+.six-colour {
+  color: rgb(150, 105, 0);
+}
+
+.seven-colour {
+  color: rgb(205, 50, 0);
+}
+
+.eight-colour {
+  color: rgb(230, 25, 0);
+}
+
+.nine-colour {
+  color: rgb(255, 0, 0);
+}
+
 table {
   border-collapse: collapse;
   width: 100%;

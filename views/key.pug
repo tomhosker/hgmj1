@@ -1,0 +1,41 @@
+extends layout
+
+block content
+  h1 #{title}
+
+  p There follows a #[b key] to the numerical pain scores used throughout this journal.
+
+  table
+    tr
+      th painScore
+      th description
+    tr
+      td #[span.zero-colour 0]
+      td No pain.
+    tr
+      td #[span.one-colour 1]
+      td Negligible pain.
+    tr
+      td #[span.two-colour 2]
+      td Little pain.
+    tr
+      td #[span.three-colour 3]
+      td Some pain.
+    tr
+      td #[span.four-colour 4]
+      td Able to cope.
+    tr
+      td #[span.five-colour 5]
+      td Max pain while able to cope.
+    tr
+      td #[span.six-colour 6]
+      td Feeling unable to cope.
+    tr
+      td #[span.seven-colour 7]
+      td Frequent suicidal thoughts.
+    tr
+      td #[span.eight-colour 8]
+      td Suicidal.
+    tr
+      td #[span.nine-colour 9]
+      td Actively suicidal.
