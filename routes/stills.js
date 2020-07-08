@@ -26,6 +26,7 @@ function getTitle(code)
   var result;
 
   if(code === "delete") result = "How to Delete a Journal Entry";
+  else if(code === "key") result = "Key";
   else result = code.charAt(0).toUpperCase()+code.slice(1);
 
   return result;
