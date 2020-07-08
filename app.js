@@ -44,6 +44,7 @@ const dotenv = require("dotenv").config();
 
 // Local imports.
 const indexRouter = require("./routes/index");
+const stillsRouter = require("./routes/stills");
 const profileRouter = require("./routes/profile");
 const asIsRouter = require("./routes/asis");
 const journalRouter = require("./routes/journal");
@@ -91,6 +92,9 @@ app.use("/profile",
 app.use("/asis",
         require("connect-ensure-login").ensureLoggedIn(),
         asIsRouter);
+app.use("/stills",
+        require("connect-ensure-login").ensureLoggedIn(),
+        stillsRouter);
 app.use("/journal",
         require("connect-ensure-login").ensureLoggedIn(),
         journalRouter);
