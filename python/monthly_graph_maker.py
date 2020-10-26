@@ -1,6 +1,9 @@
 """
 This code defines class which takes data from the HGMJ database and outputs
 a graphical representation of a month's worth of data.
+
+Run me with `python3 monthly_graph_maker.py` and then follow the in-terminal
+instructions.
 """
 
 # Standard imports.
