@@ -1,31 +1,33 @@
 extends layout
 
 block content
-  h1 #{title}
-  p Welcome to #[strong HGMJ], a mood journal.
+    h1 #{title}
+    p Welcome to #[strong HGMJ], a mood journal.
 
-  if loggedIn
-    h2 Browse Data
-    ul
-      li #[a(href="/journal") #[i The Journal]], i.e. all entries.
-      li #[a(href="/journal/recent") Recent entries].
-      li #[a(href="/stills/summaries") Summaries.]
+    if loggedIn
+        h2 Browse Data
+        ul
+            li #[a(href="/journal") #[i The Journal]], i.e. all entries.
+            li #[a(href="/journal/recent") Recent entries].
+            li #[a(href="/stills/summaries") Summaries.]
 
-    if isAdmin
-      h2 Add/Remove Data
-      ul
-        li #[a(href="uploads/upload2/JournalEntry") Add a new journal entry].
-        li #[a(href="uploads/upload2/JournalEntry/special") Add a new journal entry #[i retroactively]].
-        li #[a(href="stills/delete") Delete a journal entry].
+        if isAdmin
+            h2 Add/Remove Data
+            ul
+                li #[a(href="uploads/upload2/JournalEntry") Add a new journal entry].
+                ul
+                    li #[a(href="uploads/upload2/JournalEntry/special") Add a new journal entry #[i retroactively]].
+                    li #[a(href="uploads/upload2/JournalEntry/bulk") Fill the gap in the journal between the last entry and now].
+                li #[a(href="stills/delete") Delete a journal entry].
 
-  else
-    h2 Log In
-    p Please log in below.
-    form(action="/login", method="post")
-      p
-        | Username: 
-        input(type="text", name="username")
-      p
-        | Password: 
-        input(type="password", name="password")
-      input(type="submit", value="Submit")
+    else
+        h2 Log In
+        p Please log in below.
+        form(action="/login", method="post")
+            p
+                | Username: 
+                input(type="text", name="username")
+            p
+                | Password: 
+                input(type="password", name="password")
+            input(type="submit", value="Submit")

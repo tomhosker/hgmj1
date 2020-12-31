@@ -1,12 +1,12 @@
 extends layout
 
 block content
-  h1 #{title}
+    h1 #{title}
 
-  p Add a new record?
-  form(action=formAction, method="post")
-    for column in columns
-      p
-        | #{column.name}: 
-        input(type=column.type, name=column.name)
-    input(type="submit", value="Submit")
+    p Add a new record?
+    form(action=formAction, method="post")
+        for column in columns
+            p
+                | #{column.name}: 
+                input(type=column.type, name=column.name)
+        input(type="submit", value="Submit")
