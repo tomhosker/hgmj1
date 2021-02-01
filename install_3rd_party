@@ -1,0 +1,10 @@
+#!/bin/sh
+
+# Install Heroku Command Line Interface.
+sudo snap install --classic heroku
+# Install PostgreSQL.
+sudo apt install postgresql
+# Install the standard Ubuntu terminal (if necessary).
+sudo apt install gnome-terminal
+# Install Python packages.
+pip3 install matplotlib
