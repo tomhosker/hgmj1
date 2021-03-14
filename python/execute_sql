@@ -1,0 +1,22 @@
+#!/bin/sh
+
+### This code runs a given SQL script through the remote PostgreSQL server.
+
+# Local constants.
+APP_NAME="hgmj"
+
+# Check we've got enough arguments.
+if [ "$#" -ne 1 ]; then
+    echo "Bad number of arguments. You've given me $#, but I need 1."
+    exit 1
+fi
+
+# Check that we're logged into Heroku.
+if ! heroku whoami >/dev/null; then
+    heroku login
+fi
+
+# Now we're good to execute the script.
+if ! heroku pg:psql --app $APP_NAME < $1 >/dev/null; then
+    exit 1
+fi
