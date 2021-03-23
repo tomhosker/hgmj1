@@ -1,3 +1,8 @@
+# Custom stuff.
+python/*.csv
+python/*.db
+python/*.sql
+
 # Logs
 logs
 *.log

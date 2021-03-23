@@ -4,6 +4,7 @@ the PostgreSQL server to a local SQLite database.
 """
 
 # Standard imports.
+import csv
 import os
 import sqlite3
 import subprocess
@@ -20,7 +21,7 @@ DEFAULT_SQLITE_TYPES = ("INTEGER", "INTEGER", "INTEGER", "TEXT")
 # FUNCTIONS #
 #############
 
-def execute_query(query, sql_fn=DEFAULT_SQL_FN):
+def execute_server_query(query, sql_fn=DEFAULT_SQL_FN):
     """ Run a given query through the PostgreSQL database. """
     with open(sql_fn, "w") as sql_file:
         sql_file.write(query)
@@ -32,7 +33,7 @@ def extract_to_txt(table_name=DEFAULT_TABLE_NAME,
     """ Extract the contents of a given table to a .txt file. """
     query = ("\copy (SELECT * FROM "+table_name+") TO "+printout_fn+" "+
              "WITH csv;")
-    execute_query(query)
+    execute_server_query(query)
 
 def make_create_script(table_name=DEFAULT_TABLE_NAME,
                        columns=DEFAULT_COLUMNS,
@@ -46,6 +47,8 @@ def make_create_script(table_name=DEFAULT_TABLE_NAME,
         if index != 0:
             result = result+",\n"
         result = result+"    "+columns[index]+" "+sqlite_types[index]
+        if index == 0:
+            result = result+" PRIMARY KEY"
     result = result+");"
     return result
 
@@ -53,29 +56,57 @@ def create_local_db(path_to_db=DEFAULT_PATH_TO_DB,
                     create_script=make_create_script()):
     """ Create our SQLite database ex nihilo. """
     if os.path.exists(path_to_db):
-        raise FileExistsError("Must not overwrite dump at "+path_to_db+".")
+        response = input("Overwrite dump at "+path_to_db+"? (y/n)\n")
+        if response != "y":
+            return False
+        os.remove(path_to_db)
     subprocess.check_call(["touch", path_to_db])
     connection = sqlite3.connect(path_to_db)
     cursor = connection.cursor()
     cursor.execute(create_script)
     connection.commit()
     connection.close()
+    return True
 
-def add_to_local(data, table_name=DEFAULT_TABLE_NAME,
-                 columns=DEFAULT_COLUMNS):
-    """ Add a given data set to the local data dump. """
+def add_to_local(data, path_to_db=DEFAULT_PATH_TO_DB,
+                 table_name=DEFAULT_TABLE_NAME, columns=DEFAULT_COLUMNS):
+    """ Add a given data set to the local database. """
     query = "INSERT INTO "+table_name+" ("
     query = query+(", ".join(columns))
     query = query+")\n"
-    query = query+"VALUES\n"
-    for index in len(data):
-        if i != 0:
-            query = query+",\n"
-        row_string = ", ".join(data[i])
-        row_string = "("+row_string+")"
-        query = query+row_string
-    query = query+";"
-    
+    query = query+"VALUES ("
+    for index in range(len(columns)):
+        if index != 0:
+            query = query+", "
+        query = query+"?"
+    query = query+");"
+    connection = sqlite3.connect(path_to_db)
+    cursor = connection.cursor()
+    for record in data:
+        cursor.execute(query, record)
+    connection.commit()
+    connection.close()
+
+def extract_to_local(path_to_db=DEFAULT_PATH_TO_DB,
+                     create_script=make_create_script(),
+                     printout_fn=DEFAULT_PRINTOUT_FN,
+                     table_name=DEFAULT_TABLE_NAME,
+                     columns=DEFAULT_COLUMNS):
+    """ Copy everything from the remote server into the local database. """
+    print("Extracting to local database...")
+    if not create_local_db(path_to_db=path_to_db,
+                           create_script=create_script):
+        os.remove(printout_fn)
+        print("Extraction aborted.")
+        return False
+    extract_to_txt()
+    with open(printout_fn, "r") as csv_file:
+        data = csv.reader(csv_file, delimiter=",")
+        add_to_local(data, path_to_db=path_to_db, table_name=table_name,
+                     columns=columns)
+    os.remove(printout_fn)
+    print("Extraction complete.")
+    return True
 
 ###################
 # RUN AND WRAP UP #
@@ -83,7 +114,7 @@ def add_to_local(data, table_name=DEFAULT_TABLE_NAME,
 
 def run():
     """ Run this file. """
-    extract_to_txt()
+    extract_to_local()
 
 if __name__ == "__main__":
     run()
