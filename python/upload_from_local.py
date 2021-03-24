@@ -9,7 +9,8 @@ import sqlite3
 
 # Local imports.
 from extract_to_local import DEFAULT_PATH_TO_DB, DEFAULT_TABLE_NAME, \
-                             DEFAULT_COLUMNS, execute_server_query
+                             DEFAULT_PRIMARY_KEY, DEFAULT_COLUMNS, \
+                             execute_server_query
 
 #############
 # FUNCTIONS #
@@ -54,7 +55,17 @@ def insert_from_local(path_to_db=DEFAULT_PATH_TO_DB,
     query = query+(",\n".join(data_as_strings))+";"
     execute_server_query(query)
 
+def reset_incrementation(table_name=DEFAULT_TABLE_NAME,
+                         primary_key=DEFAULT_PRIMARY_KEY):
+    """ Fix a bug in PostgreSQL, which causes auto-incrementation to go awry
+    when uploading a lot of data to a table. """
+    query = ("SELECT setval(pg_get_serial_sequence('%s', '%s'), "+
+                           "(SELECT MAX(%s) FROM %s)+1);"
+             % (table_name, primary_key, primary_key, table_name))
+    execute_server_query(query)
+
 def upload_from_local(table_name=DEFAULT_TABLE_NAME,
+                      primary_key=DEFAULT_PRIMARY_KEY,
                       path_to_db=DEFAULT_PATH_TO_DB,
                       columns=DEFAULT_COLUMNS):
     """ Delete any data already present in the remote database, and then
@@ -65,6 +76,7 @@ def upload_from_local(table_name=DEFAULT_TABLE_NAME,
         return False
     insert_from_local(path_to_db=path_to_db, table_name=table_name,
                       columns=columns)
+    reset_incrementation(table_name=table_name, primary_key=primary_key)
     print("Upload complete.")
 
 ###################

@@ -2,7 +2,7 @@
 
 ### This code runs a given SQL script through the remote PostgreSQL server.
 
-# Local constants.
+# Constants.
 APP_NAME="hgmj"
 
 # Check we've got enough arguments.

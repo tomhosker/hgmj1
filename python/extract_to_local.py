@@ -14,6 +14,7 @@ DEFAULT_PATH_TO_DB = "local_dump.db"
 DEFAULT_PRINTOUT_FN = "printout.csv"
 DEFAULT_SQL_FN = "extract.sql"
 DEFAULT_TABLE_NAME = "JournalEntry"
+DEFAULT_PRIMARY_KEY = "id"
 DEFAULT_COLUMNS = ("id", "painScore", "theTimeStamp", "remarks")
 DEFAULT_SQLITE_TYPES = ("INTEGER", "INTEGER", "INTEGER", "TEXT")
 
@@ -36,6 +37,7 @@ def extract_to_txt(table_name=DEFAULT_TABLE_NAME,
     execute_server_query(query)
 
 def make_create_script(table_name=DEFAULT_TABLE_NAME,
+                       primary_key=DEFAULT_PRIMARY_KEY,
                        columns=DEFAULT_COLUMNS,
                        sqlite_types=DEFAULT_SQLITE_TYPES):
     """ Return the create script for our SQLite database. """
@@ -47,7 +49,7 @@ def make_create_script(table_name=DEFAULT_TABLE_NAME,
         if index != 0:
             result = result+",\n"
         result = result+"    "+columns[index]+" "+sqlite_types[index]
-        if index == 0:
+        if columns[index] == primary_key:
             result = result+" PRIMARY KEY"
     result = result+");"
     return result
