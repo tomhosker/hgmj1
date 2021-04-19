@@ -59,9 +59,10 @@ def reset_incrementation(table_name=DEFAULT_TABLE_NAME,
                          primary_key=DEFAULT_PRIMARY_KEY):
     """ Fix a bug in PostgreSQL, which causes auto-incrementation to go awry
     when uploading a lot of data to a table. """
-    query = ("SELECT setval(pg_get_serial_sequence('%s', '%s'), "+
-                           "(SELECT MAX(%s) FROM %s)+1);"
-             % (table_name, primary_key, primary_key, table_name))
+    query = ("SELECT setval(pg_get_serial_sequence('"+table_name+"', '"+
+             primary_key+"'), "+"(SELECT MAX("+primary_key+") FROM "+
+             table_name+")+1);")
+    print(query)
     execute_server_query(query)
 
 def upload_from_local(table_name=DEFAULT_TABLE_NAME,
