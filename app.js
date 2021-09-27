@@ -68,8 +68,8 @@ app.locals.pretty = true;
 // Use application-level middleware for common functionality, including
 // parsing and session handling.
 app.use(require("body-parser").urlencoded({ extended: true }));
-app.use(require("express-session")({ secret: "keyboard cat", resave: false,
-                                     saveUninitialized: false }));
+app.use(require("express-session")(
+    { secret: "keyboard cat", resave: false, saveUninitialized: false }));
 
 // Initialise Passport and restore authentication state, if any, from the
 // session.
@@ -92,26 +92,18 @@ app.use("/profile",
 app.use("/asis",
         require("connect-ensure-login").ensureLoggedIn(),
         asIsRouter);
-app.use("/stills",
-        require("connect-ensure-login").ensureLoggedIn(),
-        stillsRouter);
-app.use("/journal",
-        require("connect-ensure-login").ensureLoggedIn(),
-        journalRouter);
+app.use("/stills", stillsRouter);
 app.use("/uploads",
         require("connect-ensure-login").ensureLoggedIn(),
         uploadsRouter);
 app.get("/login", function(req, res){ res.redirect("/"); });
 app.post("/login",
          passport.authenticate("local", { failureRedirect: "/login" }),
-         function(req, res){ res.redirect("/"); }
-);
-app.get("/logout",
-  function(req, res){
+         function(req, res){ res.redirect("/"); });
+app.get("/logout", function(req, res){
     req.logout();
     res.redirect("/");
-  }
-);
+});
 
 // Catch 404 and forward to error handler.
 app.use(function(req, res, next){
