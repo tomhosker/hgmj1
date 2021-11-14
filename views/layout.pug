@@ -1,11 +1,11 @@
 doctype html
 html
-  head
-    title HGMJ | #{title}
-    link(rel="stylesheet", href="/stylesheets/style.css")
-  body
-    div.header
-    block content
-    footer
-      br
-      p Accessed: #{footstamp} | #[a(href="/") Home] | #[a(href="/logout") Log out] | #[a(href="/stills/key") Key]
+    head
+        title HGMJ | #{title}
+        link(rel="stylesheet", href="/stylesheets/style.css")
+    body
+        div.header
+        block content
+        footer
+            br
+            p Accessed: #{footstamp} | #[a(href="/") Home] | !{logoutLink} | #[a(href="/stills/key") Key]
