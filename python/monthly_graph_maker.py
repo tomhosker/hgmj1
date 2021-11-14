@@ -22,45 +22,50 @@ class MonthlyGraphMaker(GraphMaker):
     """ The class in question. """
     def __init__(self, month_no=None, year=None, show_graph=False):
         super().__init__(show_graph=show_graph)
-        self.current_month_no = self.get_current_month_no(month_no)
-        self.current_year = self.get_current_year(year)
-        self.prev_month_no = deincrement_month(self.current_month_no)
-        self.prev_year = self.get_prev_year()
+        self.current_month_no = self.get_current_month_no()
+        self.current_year = self.get_current_year()
+        self.month_no = self.get_month_no(month_no)
+        self.year = self.get_year(year)
         self.current_timestamp = \
             month_and_year_to_epoch(
                 self.current_month_no,
                 self.current_year
             )
-        self.prev_timestamp = \
-            month_and_year_to_epoch(self.prev_month_no, self.prev_year)
-        self.title = (
-            "Summary for "+MONTH_NAMES[self.prev_month_no-1]+" "+
-            str(self.prev_year)
-        )
-        self.filename = (
-            MONTH_NAMES[self.prev_month_no-1].lower()+
-            str(self.prev_year)+".png"
-        )
+        self.left_timestamp = \
+            month_and_year_to_epoch(self.month_no, self.year)
+        self.right_timestamp = \
+            next_month_and_year_to_epoch(self.month_no, self.year)
+        self.title = \
+            "Summary for "+MONTH_NAMES[self.month_no-1]+" "+str(self.year)
+        self.filename = \
+            MONTH_NAMES[self.month_no-1].lower()+str(self.year)+".png"
 
-    def get_current_month_no(self, month_no):
+    def get_current_month_no(self):
         """ Ronseal. """
-        if month_no:
-            return month_no
         now = datetime.now()
         result = now.month
         return result
 
-    def get_current_year(self, year):
+    def get_month_no(self, month_no):
+        """ Deincrement the current month, unless a specific month is
+        given. """
+        if month_no:
+            return month_no
+        result = deincrement_month(self.current_month_no)
+        return result
+
+    def get_current_year(self):
         """ Ronseal. """
-        if year:
-            return year
         now = datetime.now()
         result = now.year
         return result
 
-    def get_prev_year(self):
-        """ Get the year of the month before this one. """
-        if self.current_month_no == 1:
+    def get_year(self, year):
+        """ Deincrement the current year, unless a specific year is
+        given. """
+        if year:
+            return year
+        elif self.current_month_no == 1:
             result = self.current_year-1
         else:
             result = self.current_year
@@ -72,7 +77,7 @@ class MonthlyGraphMaker(GraphMaker):
             "Current: "+str(self.current_month_no)+", "+
             str(self.current_year)
         )
-        print("Prev: "+str(self.prev_month_no)+", "+str(self.prev_year))
+        print("To print: "+str(self.month_no)+", "+str(self.year))
 
 ####################
 # HELPER FUNCTIONS #
@@ -96,6 +101,17 @@ def month_and_year_to_epoch(month_no, year):
     pattern = "%d.%m.%Y %H:%M:%S"
     result = int(time.mktime(time.strptime(date_and_time, pattern)))
     return result
+
+def next_month_and_year_to_epoch(month_no, year):
+    """ Convert a month and year to the epoch time for the first second of
+    the FOLLOWING month. """
+    if month_no == MONTHS_IN_A_YEAR:
+        next_month_no = 1
+        next_year = year+1
+    else:
+        next_month_no = month_no+1
+        next_year = year
+    return month_and_year_to_epoch(next_month_no, next_year)
 
 def print_help():
     """ Print a help message when the user inputs illegal arguments. """
