@@ -13,7 +13,7 @@ const router = express.Router();
 const finaliser = new Finaliser();
 
 // GET home page.
-router.get("/:id", function(req, res, next){
+router.get("/:id", function (req, res, next) {
   var code = req.params.id;
   var title = getTitle(code);
 
@@ -21,14 +21,13 @@ router.get("/:id", function(req, res, next){
 });
 
 // A helper function.
-function getTitle(code)
-{
+function getTitle(code) {
   var result;
 
-  if(code === "delete") result = "How to Delete a Journal Entry";
-  else if(code === "key") result = "Key";
-  else if(code === "summaries") result = "Summaries";
-  else result = code.charAt(0).toUpperCase()+code.slice(1);
+  if (code === "delete") result = "How to Delete a Journal Entry";
+  else if (code === "key") result = "Key";
+  else if (code === "summaries") result = "Summaries";
+  else result = code.charAt(0).toUpperCase() + code.slice(1);
 
   return result;
 }

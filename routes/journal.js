@@ -15,12 +15,12 @@ const scraper = new Scraper();
 const finaliser = new Finaliser();
 
 // Return the page for the whole journal.
-router.get("/", function(req, res, next){
+router.get("/", function (req, res, next) {
   scraper.fetchJournal(req, res);
 });
 
 // Return the page for the most recent journal entries.
-router.get("/recent", function(req, res, next){
+router.get("/recent", function (req, res, next) {
   scraper.fetchRecent(req, res);
 });
 

@@ -15,7 +15,7 @@ const scraper = new Scraper();
 const finaliser = new Finaliser();
 
 // Return the page for a given table.
-router.get("/:id", function(req, res, next){
+router.get("/:id", function (req, res, next) {
   scraper.fetchAsIs(req, res);
 });
 
