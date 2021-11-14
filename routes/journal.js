@@ -16,7 +16,6 @@ const finaliser = new Finaliser();
 
 // Return the page for the whole journal.
 router.get("/", function (req, res, next) {
-console.log("HERRO!");
     scraper.fetchJournal(req, res);
 });
 
