@@ -1,0 +1,4 @@
+matplotlip
+pylint >= 2.12.2
+pytest
+pytest-cov
