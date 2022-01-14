@@ -13,5 +13,6 @@ sudo apt --yes install postgresql
 sudo apt --yes install gnome-terminal
 # Install Python.
 sudo apt --yes install python3
-# Install Python packages.
+# Install PIP and its packages packages.
+sudo apt --yes install python3-pip
 pip3 install -r pip-requirements.txt
