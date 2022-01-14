@@ -24,8 +24,8 @@ class YearlyGraphMaker(GraphMaker):
         super().__init__(show_graph=show_graph)
         self.current_year = self.get_current_year(year)
         self.prev_year = self.current_year-1
-        self.current_timestamp = year_to_epoch(self.current_year)
-        self.prev_timestamp = year_to_epoch(self.prev_year)
+        self.left_timestamp = year_to_epoch(self.prev_year)
+        self.right_timestamp = year_to_epoch(self.current_year)
         self.title = "Summary for "+str(self.prev_year)
         self.filename = str(self.prev_year)+".png"
 
@@ -68,7 +68,7 @@ def print_help():
 
 def run():
     try:
-        if len(sys.argv >= 2):
+        if len(sys.argv) >= 2:
             ygm = YearlyGraphMaker(year=int(sys.argv[1]))
         else:
             ygm = YearlyGraphMaker()
