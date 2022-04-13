@@ -7,7 +7,7 @@ instructions.
 """
 
 # Standard imports.
-import sys
+import argparse
 import time
 from datetime import datetime
 
@@ -54,27 +54,30 @@ def year_to_epoch(year):
     result = int(time.mktime(time.strptime(date_and_time, pattern)))
     return result
 
-def print_help():
-    """ Print a help message if the user tried to use illegal arguments. """
-    print(
-        "The correct syntax is:\n\n"+
-        "    python3 yearly_graph_maker.py [YEAR]\n\n"+
-        "Where the year is optional."
-    )
-
 ###################
 # RUN AND WRAP UP #
 ###################
 
+def make_parser():
+    """ Return a parser argument. """
+    result = \
+        argparse.ArgumentParser(
+            description="Make the graph for a given year"
+        )
+    result.add_argument(
+        "--year",
+        default=None,
+        dest="year",
+        help="The year in question",
+        type=int
+    )
+    return result
+
 def run():
-    try:
-        if len(sys.argv) >= 2:
-            ygm = YearlyGraphMaker(year=int(sys.argv[1]))
-        else:
-            ygm = YearlyGraphMaker()
-    except ValueError:
-        print_help()
-        return
+    """ Run this file. """
+    parser = make_parser()
+    arguments = parser.parse_args()
+    ygm = YearlyGraphMaker(year=arguments.year)
     ygm.make_graph()
 
 if __name__ == "__main__":

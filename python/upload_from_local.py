@@ -8,9 +8,13 @@ was already present on the latter in the process.
 import sqlite3
 
 # Local imports.
-from extract_to_local import DEFAULT_PATH_TO_DB, DEFAULT_TABLE_NAME, \
-                             DEFAULT_PRIMARY_KEY, DEFAULT_COLUMNS, \
-                             execute_server_query
+from extract_to_local import (
+    DEFAULT_PATH_TO_DB,
+    DEFAULT_TABLE_NAME,
+    DEFAULT_PRIMARY_KEY,
+    DEFAULT_COLUMNS,
+    execute_server_query
+)
 
 #############
 # FUNCTIONS #

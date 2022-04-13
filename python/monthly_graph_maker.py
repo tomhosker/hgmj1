@@ -1,13 +1,13 @@
 """
-This code defines class which takes data from the HGMJ database and outputs
-a graphical representation of a month's worth of data.
+This code defines class which takes data from the HGMJ database and outputs a
+graphical representation of a month's worth of data.
 
 Run me with `python3 monthly_graph_maker.py` and then follow any in-terminal
 instructions.
 """
 
 # Standard imports.
-import sys
+import argparse
 import time
 from datetime import datetime
 
@@ -20,38 +20,37 @@ from graph_maker import GraphMaker, MONTHS_IN_A_YEAR, MONTH_NAMES
 
 class MonthlyGraphMaker(GraphMaker):
     """ The class in question. """
-    def __init__(self, month_no=None, year=None, show_graph=False):
+    def __init__(self, month_num=None, year=None, show_graph=False):
         super().__init__(show_graph=show_graph)
-        self.current_month_no = self.get_current_month_no()
+        self.current_month_num = self.get_current_month_num()
         self.current_year = self.get_current_year()
-        self.month_no = self.get_month_no(month_no)
+        self.month_num = self.get_month_num(month_num)
         self.year = self.get_year(year)
         self.current_timestamp = \
             month_and_year_to_epoch(
-                self.current_month_no,
+                self.current_month_num,
                 self.current_year
             )
         self.left_timestamp = \
-            month_and_year_to_epoch(self.month_no, self.year)
+            month_and_year_to_epoch(self.month_num, self.year)
         self.right_timestamp = \
-            next_month_and_year_to_epoch(self.month_no, self.year)
+            next_month_and_year_to_epoch(self.month_num, self.year)
         self.title = \
-            "Summary for "+MONTH_NAMES[self.month_no-1]+" "+str(self.year)
+            "Summary for "+MONTH_NAMES[self.month_num-1]+" "+str(self.year)
         self.filename = \
-            MONTH_NAMES[self.month_no-1].lower()+str(self.year)+".png"
+            MONTH_NAMES[self.month_num-1].lower()+str(self.year)+".png"
 
-    def get_current_month_no(self):
+    def get_current_month_num(self):
         """ Ronseal. """
         now = datetime.now()
         result = now.month
         return result
 
-    def get_month_no(self, month_no):
-        """ Deincrement the current month, unless a specific month is
-        given. """
-        if month_no:
-            return month_no
-        result = deincrement_month(self.current_month_no)
+    def get_month_num(self, month_num):
+        """ Deincrement the current month, unless a specific month is given. """
+        if month_num:
+            return month_num
+        result = deincrement_month(self.current_month_num)
         return result
 
     def get_current_year(self):
@@ -61,11 +60,10 @@ class MonthlyGraphMaker(GraphMaker):
         return result
 
     def get_year(self, year):
-        """ Deincrement the current year, unless a specific year is
-        given. """
+        """ Deincrement the current year, unless a specific year is given. """
         if year:
             return year
-        elif self.current_month_no == 1:
+        elif self.current_month_num == 1:
             result = self.current_year-1
         else:
             result = self.current_year
@@ -74,27 +72,26 @@ class MonthlyGraphMaker(GraphMaker):
     def print_months_and_years(self):
         """ A debugging method. """
         print(
-            "Current: "+str(self.current_month_no)+", "+
-            str(self.current_year)
+            "Current: "+str(self.current_month_num)+", "+str(self.current_year)
         )
-        print("To print: "+str(self.month_no)+", "+str(self.year))
+        print("To print: "+str(self.month_num)+", "+str(self.year))
 
 ####################
 # HELPER FUNCTIONS #
 ####################
 
-def deincrement_month(current_month_no):
+def deincrement_month(current_month_num):
     """ Get the month number if the month before this one. """
-    if current_month_no == 1:
+    if current_month_num == 1:
         result = MONTHS_IN_A_YEAR
     else:
-        result = current_month_no-1
+        result = current_month_num-1
     return result
 
-def month_and_year_to_epoch(month_no, year):
+def month_and_year_to_epoch(month_num, year):
     """ Convert a month and year to the epoch time for the first second of
     said month. """
-    month_str = str(month_no)
+    month_str = str(month_num)
     if len(month_str) == 1:
         month_str = "0"+month_str
     date_and_time = "01."+month_str+"."+str(year)+" 00:00:01"
@@ -102,44 +99,48 @@ def month_and_year_to_epoch(month_no, year):
     result = int(time.mktime(time.strptime(date_and_time, pattern)))
     return result
 
-def next_month_and_year_to_epoch(month_no, year):
+def next_month_and_year_to_epoch(month_num, year):
     """ Convert a month and year to the epoch time for the first second of
     the FOLLOWING month. """
-    if month_no == MONTHS_IN_A_YEAR:
-        next_month_no = 1
+    if month_num == MONTHS_IN_A_YEAR:
+        next_month_num = 1
         next_year = year+1
     else:
-        next_month_no = month_no+1
+        next_month_num = month_num+1
         next_year = year
-    return month_and_year_to_epoch(next_month_no, next_year)
-
-def print_help():
-    """ Print a help message when the user inputs illegal arguments. """
-    print(
-        "The correct syntax is:\n\n"+
-        "    python3 monthly_graph_maker.py [MONTH NUMBER] [YEAR]\n\n"+
-        "Where the month number and year are optional."
-    )
+    return month_and_year_to_epoch(next_month_num, next_year)
 
 ###################
 # RUN AND WRAP UP #
 ###################
 
+def make_parser():
+    """ Return a parser argument. """
+    result = \
+        argparse.ArgumentParser(
+            description="Make the graph for a given month"
+        )
+    result.add_argument(
+        "--month-num",
+        default=None,
+        dest="month_num",
+        help="The month number, where 1 = January",
+        type=int
+    )
+    result.add_argument(
+        "--year",
+        default=None,
+        dest="year",
+        help="The year in question",
+        type=int
+    )
+    return result
+
 def run():
-    try:
-        if len(sys.argv) >= 3:
-            mgm = \
-                MonthlyGraphMaker(
-                   month_no=int(sys.argv[1]),
-                   year=int(sys.argv[2])
-                )
-        elif len(sys.argv) == 2:
-            mgm = MonthlyGraphMaker(month_no=int(sys.argv[1]))
-        else:
-            mgm = MonthlyGraphMaker()
-    except ValueError:
-        print_help()
-        return
+    """ Run this file. """
+    parser = make_parser()
+    arguments = parser.parse_args()
+    mgm = MonthlyGraphMaker(month_num=arguments.month_num, year=arguments.year)
     mgm.make_graph()
 
 if __name__ == "__main__":
