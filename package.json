@@ -5,7 +5,8 @@
     "scripts": {
         "start": "node ./bin/www",
         "devstart": "nodemon ./bin/www",
-        "preinstall_local": "sh install_3rd_party"
+        "access-db": "heroku auth:login && gnome-terminal -- heroku pg:psql --app hgmj",
+        "preinstall-local": "sh install_3rd_party"
     },
     "dependencies": {
         "body-parser": "^1.19.0",
